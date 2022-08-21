@@ -1,6 +1,6 @@
 # Jenkins-docker-slave
 
-Jenkins has powerful feature of master slave architecture which enables distributed builds. This article we will learn how to setup slave nodes using Docker and integrate with Jenkins Master.
+Jenkins has powerful feature of master slave architecture which enables distributed builds. In This repository we will learn how to setup slave nodes using Docker and integrate with Jenkins Master.
 
 ![image](https://user-images.githubusercontent.com/92631457/185803451-b7ba3db2-a2ea-46b2-8ef2-8afbd32e3e94.png)
 
