@@ -19,7 +19,7 @@ apt-get -qy full-upgrade && \
 apt-get install -qy curl && \
 apt-get install -qy curl && \
 curl -sSL https://get.docker.com/ | sh  && \
-service docker start --privileged=true && \
+service docker start && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
     usermod -aG docker jenkins && \
@@ -36,5 +36,5 @@ RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
 
 # Standard SSH port
 EXPOSE 22
-
+ENTRYPOINT ["--privileged=true"]
 CMD ["/usr/sbin/sshd", "-D"]
