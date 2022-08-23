@@ -13,13 +13,14 @@ RUN apt-get update && \
     apt-get install -qy maven && \
 # Cleanup old packages
     apt-get -qy autoremove && \
+    # Install docker for building the images
+    apt-get install -qy docker.io && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:password" | chpasswd && \
     mkdir /home/jenkins/.m2
-# Install docker for building the images
-    apt-get install docker.io -y
+
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
