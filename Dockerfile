@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM node:16.13.1-alpine
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get install -qy git && \
