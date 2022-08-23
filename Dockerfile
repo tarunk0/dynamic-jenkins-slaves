@@ -8,6 +8,7 @@ RUN apt-get update && \
     mkdir -p /var/run/sshd && \
 # Install JDK 11
     apt-get install -qy default-jdk && \
+    apt-get install -y docker.io && \
 # Install maven
     apt-get install -qy maven && \
 # Cleanup old packages
