@@ -16,7 +16,7 @@ RUN apt-get update && \
     # Install docker for building the images
     apt-get install -qy docker.io && \
     
-    sudo usermod -aG docker jenkins && \
+    usermod -aG docker jenkins && \
     systemctl start docker && \
     systemctl enable docker && \
 # Add user jenkins to the image
