@@ -19,7 +19,7 @@ apt-get -qy full-upgrade && \
 apt-get install -qy curl && \
 apt-get install -qy curl && \
 curl -sSL https://get.docker.com/ | sh  && \
-service docker start && \
+service docker start --privileged=true && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
     usermod -aG docker jenkins && \
