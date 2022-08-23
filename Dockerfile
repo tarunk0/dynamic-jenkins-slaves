@@ -14,13 +14,14 @@ RUN apt-get update && \
 # Cleanup old packages
     apt-get -qy autoremove && \
     # Install docker for building the images
-    apt-get install -qy docker.io && \
-    
-    usermod -aG docker jenkins && \
-    systemctl start docker && \
-    systemctl enable docker && \
+    apt-get update && \
+    apt-get -qy full-upgrade && \
+    apt-get install -qy curl && \
+    apt-get install -qy curl && \
+    curl -sSL https://get.docker.com/ | sh \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
+    usermod -aG docker jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:password" | chpasswd && \
     mkdir /home/jenkins/.m2
