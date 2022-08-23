@@ -31,5 +31,4 @@ RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
 
 # Standard SSH port
 EXPOSE 22
-ENTRYPOINT ["--privileged=true"]
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/sbin/sshd", "-D" , "--privileged=true"]
