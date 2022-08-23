@@ -15,6 +15,9 @@ RUN apt-get update && \
     apt-get -qy autoremove && \
     # Install docker for building the images
     apt-get install -qy docker.io && \
+    
+    systemctl start docker && \
+    systemctl enable docker && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
 # Set password for the jenkins user (you may want to alter this).
