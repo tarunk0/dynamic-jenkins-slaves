@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-
+USER root
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get install -qy git && \
@@ -13,15 +13,20 @@ RUN apt-get update && \
     apt-get install -qy maven && \
 # Cleanup old packages
     apt-get -qy autoremove && \
-# Install docker for building the images
-    apt install docker.io -y && \
 # Add user jenkins to the image
     adduser --quiet jenkins && \
-    usermod -aG docker jenkins && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:password" | chpasswd && \
     mkdir /home/jenkins/.m2
 
+RUN apt-get update \
+      && apt-get install -y sudo \
+      && rm -rf /var/lib/apt/lists/*
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+ 
+USER jenkins
+COPY plugins.txt /usr/share/jenkins/plugins.txt
+RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
