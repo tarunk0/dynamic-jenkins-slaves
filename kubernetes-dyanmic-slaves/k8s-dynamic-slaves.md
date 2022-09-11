@@ -90,3 +90,15 @@ pipeline {
 ```
 
  - If your jenkins is running in any other instance outside your cluster then you have to create the credentials using kubeconfig or create secrets and service account in kubernetes. Then configure the kubernetes cloud in jenkins. 
+
+![image](https://user-images.githubusercontent.com/92631457/189523584-b5a88d24-6a2d-4e16-95f9-ae62dd88f609.png)
+
+![image](https://user-images.githubusercontent.com/92631457/189523668-3db9edea-04bd-4e17-891c-2691e4c8859a.png)
+
+![image](https://user-images.githubusercontent.com/92631457/189523740-23fe4577-e4db-48f4-bea9-b7e1fd7db842.png)
+
+![image](https://user-images.githubusercontent.com/92631457/189523810-ef6cbdcf-d451-4782-a0d5-e18d50e16859.png)
+
+ - Now there is no need of doing any other configuration like adding the jnlp pod template and all. As jnlp pod would be automatically launched and rest we define in the groovy pipeline whatever container we need. The containers will be created in the same pod. This way we can even restrict which stage to run and which not.(This is very helpful in development phase when we try and test the pipeline and debug it) and which stage should use which container. 
+
+
