@@ -88,3 +88,5 @@ pipeline {
   }
 }
 ```
+
+ - If your jenkins is running in any other instance outside your cluster then you have to create the credentials using kubeconfig or create secrets and service account in kubernetes. Then configure the kubernetes cloud in jenkins. 
