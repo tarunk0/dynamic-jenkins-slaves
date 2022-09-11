@@ -146,3 +146,7 @@ subjects:
   namespace: default
  ```
 https://raw.githubusercontent.com/kunchalavikram1427/jenkins-cloud-agents/master/jenkins-sa.yml
+
+- Alternative to this - Check link:
+
+https://ahmet.im/blog/authenticating-to-gke-without-gcloud/
