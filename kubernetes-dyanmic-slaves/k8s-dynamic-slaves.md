@@ -101,4 +101,47 @@ pipeline {
 
  - Now there is no need of doing any other configuration like adding the jnlp pod template and all. As jnlp pod would be automatically launched and rest we define in the groovy pipeline whatever container we need. The containers will be created in the same pod. This way we can even restrict which stage to run and which not.(This is very helpful in development phase when we try and test the pipeline and debug it) and which stage should use which container. 
 
+ ## Create Secrets and Service Account to connect to cluster
+ 
+  - if you want to connect to any CSPs k8s cluster like GKE or EKS or AKS then create a service account and secret and connect to your cluster, i have experimented that is the only feasible way especially for GKE, else you cant connect with the cluster using the kube config file. 
+  - Just run this manifest in your cluster and you are good to go. 
+  - Run commands like ```kubectl get secrets``` then just describe the secret using ```kubectl describe <secret name> ```
 
+```sh
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jenkins
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create","delete","get","list","patch","update","watch"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create","delete","get","list","patch","update","watch"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get","list","watch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-role-binding
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jenkins
+subjects:
+- kind: ServiceAccount
+  name: jenkins-sa
+  namespace: default
+ ```
