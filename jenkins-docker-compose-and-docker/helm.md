@@ -21,7 +21,7 @@
 
 ![image](https://user-images.githubusercontent.com/92631457/189499798-5cea13b0-5109-4c8c-8229-41bc3dbe4802.png)
 
-- Now after making the changes as required, like changing the servicePort to NodePoert save the file and then install the chart by giving it some name. 
+- Now after making the changes as required, like changing the servicetype to NodePort  or Load Balancer save the file and then install the chart by giving it some name. Check other configurations also then intall the chart using helm install <release name> <chart name>
 
 ![image](https://user-images.githubusercontent.com/92631457/189500145-744e21a1-a743-4786-868c-aa3c8df06374.png)
 
