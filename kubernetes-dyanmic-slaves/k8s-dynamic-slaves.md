@@ -89,6 +89,82 @@ pipeline {
 }
 ```
 
+Eg: 3
+
+```sh
+   pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            app: test
+        spec:
+          containers:
+          - name: git
+            image: bitnami/git:latest
+            command:
+            - cat
+            tty: true
+          - name: maven
+            image: maven:3.8.3-adoptopenjdk-11
+            command:
+            - cat
+            tty: true
+          - name: kaniko
+            image: gcr.io/kaniko-project/executor:debug
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+            - name: kaniko-secret
+              mountPath: /kaniko/.docker
+          volumes:
+          - name: kaniko-secret
+            secret:
+              secretName: regcred
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
+      '''
+    }      
+  }
+  environment{
+    DOCKERHUB_USERNAME = "tarunk0"
+    APP_NAME = "kaniko-webapp-demo"
+    IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
+    IMAGE_TAG = "${BUILD_NUMBER}"
+  }
+ stages {
+    stage('Checkout SCM') {
+      steps {
+        container('git') {
+          git url: 'https://github.com/kunchalavikram1427/maven-employee-web-application.git',
+          branch: 'master'
+        }
+      }
+    }
+    stage('Build SW'){
+      steps {
+        container('maven'){
+          sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+        }
+      }
+    }
+    stage('Build Container Image'){
+      steps {
+        container('kaniko'){
+          sh "/kaniko/executor --context $WORKSPACE --destination $IMAGE_NAME:$IMAGE_TAG"
+        }
+      }
+    }
+  }
+}
+
+```
+
  - If your jenkins is running in any other instance outside your cluster then you have to create the credentials using kubeconfig or create secrets and service account in kubernetes. Then configure the kubernetes cloud in jenkins. 
 
 ![image](https://user-images.githubusercontent.com/92631457/189523584-b5a88d24-6a2d-4e16-95f9-ae62dd88f609.png)
